@@ -1,0 +1,15 @@
+{% extends 'base3.html' %}
+{% block content %}
+		<h1>welcome</h1>
+		<ul>
+		<div class="row"><a href="{% url 'addhobby' %}" style="margin-top: 30px;margin-left: 396px;min-width: 222px" button type="button" class="btn btn-primary btn-rounded btn-fw" >Add hobby</a></button></div>
+		<div class="row"><a href="{% url 'addhobbyfactor' %}" style="margin-top: 30px;margin-left: 396px;min-width: 222px" button type="button" class="btn btn-primary btn-rounded btn-fw">Add hobby factor</a></button></div>
+		<div class="row"><a href="{% url 'addagefactor' %}" style="margin-top: 30px;margin-left: 396px;min-width: 222px" button type="button" class="btn btn-primary btn-rounded btn-fw">Add Age factor</a></button></div>
+		<div class="row"><a href="{% url 'addseason' %}" style="margin-top: 30px;margin-left: 396px;min-width: 222px" button type="button" class="btn btn-primary btn-rounded btn-fw">Add season</a></button></div>
+		<div class="row"><a href="{% url 'addseasonfactor' %}" style="margin-top: 30px;margin-left: 396px;min-width: 222px" button type="button" class="btn btn-primary btn-rounded btn-fw">Add season factor</a></button></div>
+		<div class="row"><a href="{% url 'addseasoncountryfactor' %}" style="margin-top: 30px;margin-left: 396px;min-width: 222px" button type="button" class="btn btn-primary btn-rounded btn-fw">Add season country factor</a></button></div>
+		<div class="row"><a href="{% url 'logout' %}" style="margin-top: 30px;margin-left: 396px;min-width: 222px" button type="button" class="btn btn-primary btn-rounded btn-fw">Logout</a></button></div>
+		
+		</ul>
+		
+{% endblock %}

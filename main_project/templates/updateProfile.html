@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Corona Admin</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="/static/bootstraptemp/template/assets/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="/static/bootstraptemp/template/assets/vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <!-- endinject -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="/static/bootstraptemp/template/assets/css/style.css">
+    <!-- End layout styles -->
+    <link rel="shortcut icon" href="/static/bootstraptemp/template/assets/images/favicon.png" />
+  </head>
+
+
+
+<script src="/static/jquery-1.8.3.min.js"></script>
+<script>
+	$(document).ready(function(){
+				$("#country").change(function(){
+					var countryid=$("#country").val()
+						$.ajax({
+							url:"{% url 'getstate' %}",
+							data:{'countryid':countryid},
+							success:function(data){
+									$("#state").html(data)
+									}
+							})
+					})
+			})		
+</script>
+
+
+<script type="text/javascript">
+	function validation()
+	{
+		var alpha=/^[a-zA-Z]+$/;
+		var num=/^[0-9]+$/;
+
+		var name=document.getElementById("name")
+		var gender=document.form.gender
+		var dob=document.getElementById("dob")
+		var address=document.getElementById("address")
+		var phone=document.getElementById("phone")
+		var country=document.getElementById("country")
+		var state=document.getElementById("state")
+		var securityquestion=document.getElementById("securityquestion")
+		var answer=document.getElementById("answer")
+		var username=document.getElementById("username")
+		var password=document.getElementById("password")
+		var hobby=document.form.hobby
+
+		var flag=0
+		if(name.value.length == 0)
+		{
+			alert("Enter the name")
+			return false;
+		}
+		else if(gender[0].checked == false && gender[1].checked == false)
+		{
+			alert("Enter the gender")
+			return false;
+		}
+		else if(dob.value.length == 0)
+		{
+			alert("Enter the dob")
+			return false;
+		}
+		else if(address.value.length == 0)
+		{
+			alert("Enter the address")
+			return false;
+		}
+		else if(phone.value.length == 0)
+		{
+			alert("Enter the phone")
+			return false;
+		}
+		else if(country.value.length == 0)
+		{
+			alert("Enter the country")
+			return false;
+		}
+		else if(state.value.length == 0)
+		{
+			alert("Enter the state")
+			return false;
+		}
+		else if(securityquestion.value.length == 0)
+		{
+			alert("Enter the securityquestion")
+			return false;
+		}
+		else if(answer.value.length == 0)
+		{
+			alert("Enter the answer")
+			return false;
+		}
+		else if(username.value.length == 0)
+		{
+			alert("Enter the username")
+			return false;
+		}
+		else if(password.value.length == 0)
+		{
+			alert("Enter the password")
+			return false;
+		}
+		for(var i=0;i<hobby.length;i++)
+		{
+			if(hobby[i].checked == true)
+			flag=1
+		}
+		if(flag == 0)
+		{
+			alert("Item not selected")
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+		}
+</script>
+
+
+
+  <body>
+	<form method="post" action="{% url 'updateProfileAction' %}" name="form">
+		{% csrf_token %}
+    <div class="container-scroller">
+      <div class="container-fluid page-body-wrapper full-page-wrapper">
+        <div class="row w-100 m-0">
+          <div class="content-wrapper full-page-wrapper d-flex align-items-center auth login-bg">
+            <div class="card col-lg-4 mx-auto" style="width:100%">
+              <div class="card-body px-5 py-5">
+                <h3 class="card-title text-left mb-3">Register</h3>
+                <form>
+			{% for v in data1 %}
+                  <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" class="form-control p_input" name="name" value="{{v.name}}" id="name">
+                  </div>
+                  <div class="form-group">
+                    <label>Gender</label>
+                    {% if v.gender == 'male' %}
+				<input type="radio" name="gender" value="male" checked="true">MALE
+				<input type="radio" name="gender" value="female">FEMALE
+				{% else %}
+				<input type="radio" name="gender" value="male">MALE
+				<input type="radio" name="gender" value="female" checked="true">FEMALE
+				{% endif %}
+                  </div>
+		<div class="form-group">
+                    <label>Dob</label>
+                    <input type="date" class="form-control p_input" name="dob" value="{{v.dob}}" id="dob">
+                  </div>
+
+		<div class="form-group">
+                    <label>Address</label>
+                    <textarea name="address" rows="10" cols="20" id="address" class="form-control p_input">{{v.address}}</textarea>
+                  </div>
+
+		<div class="form-group">
+                    <label>Phone</label>
+                    <input type="text" class="form-control p_input" name="phone" id="phone" value="{{v.phone}}">
+                  </div>
+		<div class="form-group">
+                    <label>Country</label>
+		<select name="country" id="country" class="form-control p_input">
+					<option value="{{v.country.id}}">{{v.country.country}}</option>
+					
+					{% for v in data2 %}
+				<option value="{{v.id}}">{{v.country}}</option>
+				{% endfor %}
+				</select>
+		</div>
+		<div class="form-group">
+                    <label>State</label>
+			<select name="state" id="state" class="form-control p_input">
+				<option value="{{v.state.id}}">{{v.state.state}}</option>
+				</select>
+		</div>
+		<div class="form-group">
+                    <label>Security Question</label>
+		<select name="securityquestion" id="securityquestion" class="form-control p_input">
+			<option value="{{v.securityquestion}}">{{v.securityquestion}}</option>
+					<option value="">---select---</option>
+					<option value="What's your pet's name?">What's your pet's name?</option>
+					<option value="What's your father's name?">What's your father's name?</option>
+					<option value="What's your mother's name?">What's your mothers's name?</option>
+				</select>
+		</div>
+		<div class="form-group">
+                    <label>Answer</label>
+                    <input type="text" name="answer" id="answer" value="{{v.answer}}" class="form-control p_input">
+                  </div>
+			
+		
+		<div class="form-group">
+                    <label>Username</label>
+                    <input type="text" name="username" id="username" value="{{v.username}}" class="form-control p_input">@mymail.com
+                  </div>
+			
+			
+                  <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" name="password" id="password" value="{{v.password}}" class="form-control p_input">
+                  </div>
+
+		<div class="form-group">
+                    <label>Hobbies</label>
+			{% for v in data3 %}
+				
+				
+                    <input type="checkbox" class="form-control p_input" {% for h in data4 %} name="hobby"  value="{{v.id}}" {% if v.id == h.hobbyid.id %} checked="true" {% endif %} {% endfor %}>{{v.hobbyname}}
+              
+{% endfor %} 
+		</div>
+
+
+                  <div class="text-center">
+                    <button type="submit" class="btn btn-primary btn-block enter-btn" onclick="return validation()">Update</button>
+                  </div>
+                  {% endfor %}
+                </form>
+              </div>
+            </div>
+          </div>
+          <!-- content-wrapper ends -->
+        </div>
+        <!-- row ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="/static/bootstraptemp/template/assets/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="/static/bootstraptemp/template/assets/js/off-canvas.js"></script>
+    <script src="/static/bootstraptemp/template/assets/js/hoverable-collapse.js"></script>
+    <script src="/static/bootstraptemp/template/assets/js/misc.js"></script>
+    <script src="/static/bootstraptemp/template/assets/js/settings.js"></script>
+    <script src="/static/bootstraptemp/template/assets/js/todolist.js"></script>
+    <!-- endinject -->
+  </body>
+{% if messages %}
+	{% for msg in messages %}
+		<script>
+			alert('{{msg}}')
+		</script>
+	{% endfor %}
+{% endif %}
+</html>

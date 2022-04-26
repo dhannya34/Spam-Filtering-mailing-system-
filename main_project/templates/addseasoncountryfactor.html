@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Corona Admin</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="/static/bootstraptemp/template/assets/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="/static/bootstraptemp/template/assets/vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <!-- endinject -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="/static/bootstraptemp/template/assets/css/style.css">
+    <!-- End layout styles -->
+    <link rel="shortcut icon" href="/static/bootstraptemp/template/assets/images/favicon.png" />
+  </head>
+
+
+
+<script type="text/javascript">
+	function validation()
+	{
+		var season=document.getElementById("season")
+		var country=document.getElementById("country")
+		var state=document.getElementById("state")
+		var factor=document.getElementById("factor")
+		var month=document.getElementById("month")
+
+		if(season.value.length == 0)
+		{
+			alert("Enter the season")
+			return false;
+		}
+		else if(country.value.length == 0)
+		{
+			alert("Enter the country")
+			return false;
+		}
+		else if(state.value.length == 0)
+		{
+			alert("Enter the state")
+			return false;
+		}
+		else if(factor.value.length == 0)
+		{
+			alert("Enter the factor")
+			return false;
+		}
+		else if(month.value.length == 0)
+		{
+			alert("Enter the month")
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+		}
+</script>
+
+<script src="/static/jquery-1.8.3.min.js"></script>
+<script>
+	$(document).ready(function(){
+				$("#country").change(function(){
+					var countryid=$("#country").val()
+						$.ajax({
+							url:"{% url 'getstate' %}",
+							data:{'countryid':countryid},
+							success:function(data){
+									$("#state").html(data)
+									}
+								})
+							})
+					})
+</script>
+
+
+  <body>
+	<form method="post" action="{% url 'addseasoncountryfactorAction' %}">
+		{% csrf_token %}
+    <div class="container-scroller">
+      <div class="container-fluid page-body-wrapper full-page-wrapper">
+        <div class="row w-100 m-0">
+          <div class="content-wrapper full-page-wrapper d-flex align-items-center auth login-bg">
+            <div class="card col-lg-4 mx-auto">
+              <div class="card-body px-5 py-5">
+                <h3 class="card-title text-left mb-3">Add Season Country Factor</h3>
+                <form>
+                  <div class="form-group">
+                    <label>Season</label>
+                    <select name="season" id="season" class="form-control p_input">		
+					<option value="">---select---</option>
+					{% for v in data1 %}
+					<option value="{{v.id}}">{{v.seasonname}}</option>
+					{% endfor %}
+				</select>
+                  </div>
+                  
+		<div class="form-group">
+                    <label>Country</label>
+                    <select name="country" id="country" class="form-control p_input">		
+					<option value="">---select---</option>
+					{% for v in data2 %}
+					<option value="{{v.id}}">{{v.country}}</option>
+					{% endfor %}
+				</select>
+                  </div>
+
+		<div class="form-group">
+                    <label>State</label>
+                    <select name="state" id="state" class="form-control p_input">
+				<option value="">---select---</option>
+				</select>
+                  </div>
+		<div class="form-group">
+                    <label>Factor</label>
+                    <select name="factor" id="factor" class="form-control p_input">		
+					<option value="">---select---</option>
+					{% for v in data3 %}
+					<option value="{{v.id}}">{{v.factorname}}</option>
+					{% endfor %}
+				</select>
+                  </div>
+
+		<div class="form-group">
+                    <label>Month</label>
+                    <select name="month" id="month" class="form-control p_input">
+					<option value="">---select---</option>
+					<option value="1">January</option>
+					<option value="2">February</option>
+					<option value="3">March</option>
+					<option value="4">April</option>
+					<option value="5">May</option>
+					<option value="6">June</option>
+					<option value="7">July</option>
+					<option value="8">August</option>
+					<option value="9">September</option>
+					<option value="10">October</option>
+					<option value="11">November</option>
+					<option value="12">December</option>
+					
+				</select>
+                  </div>
+
+		
+                  <div class="form-group d-flex align-items-center justify-content-between">
+                    
+                    
+                  </div>
+                  <div class="text-center">
+                    <button type="submit" class="btn btn-primary btn-block enter-btn" onclick="return validation()">Add</button>
+                  </div>
+                  
+                  
+                </form>
+              </div>
+			
+            </div>
+          </div>
+		
+          <!-- content-wrapper ends -->
+        </div>
+		
+        <!-- row ends -->
+      </div>
+		
+      <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="/static/bootstraptemp/template/assets/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="/static/bootstraptemp/template/assets/js/off-canvas.js"></script>
+    <script src="/static/bootstraptemp/template/assets/js/hoverable-collapse.js"></script>
+    <script src="/static/bootstraptemp/template/assets/js/misc.js"></script>
+    <script src="/static/bootstraptemp/template/assets/js/settings.js"></script>
+    <script src="/static/bootstraptemp/template/assets/js/todolist.js"></script>
+    <!-- endinject -->
+  </body>
+{% if messages %}
+	{% for msg in messages %}
+		<script>
+			alert('{{msg}}')
+		</script>
+	{% endfor %}
+{% endif %}
+</html>
+
+
+
